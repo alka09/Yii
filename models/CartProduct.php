@@ -19,8 +19,7 @@ class CartProduct extends Model
     {
         return [
             [['name', 'description', 'price', 'producer'], 'required'],
-            [['name', 'description', 'producer'], 'string'],
-            ['price', 'int']
+            [['name', 'description', 'producer'], 'CartValidation', 'string'],
         ];
     }
 
@@ -34,5 +33,13 @@ class CartProduct extends Model
             'price' => 'Цена',
             'producer' => 'Производитель'
         ];
+    }
+
+    public function CartValidation($attribute, $params){
+
+        if ($this->$attribute !='string'){
+            $this->addErrors($attribute, 'Валидация не прошла!');
+        }
+
     }
 }
