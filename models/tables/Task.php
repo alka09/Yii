@@ -30,14 +30,15 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name_id', 'task', 'description', 'user'], 'required'],
-            [['name_id'], 'integer'],
-            [['created'], 'safe'],
-            [['task'], 'string', 'max' => 128],
-            [['description'], 'string', 'max' => 1024],
-            [['user'], 'string', 'max' => 50],
+            [['name', 'date'], 'required'],
+            [['date'], 'safe'],
+            [['description'], 'string'],
+            [['user_id'], 'integer'],
+            [['name'], 'string', 'max' => 255],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -46,7 +47,7 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name_id' => 'Name ID',
+            'user_id' => 'Name ID',
             'task' => 'Task',
             'description' => 'Description',
             'created' => 'Created',

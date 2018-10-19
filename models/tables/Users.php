@@ -3,7 +3,7 @@
 namespace app\models\tables;
 
 use Yii;
-use yii\rbac\Role;
+
 
 /**
  * This is the model class for table "users".
@@ -47,7 +47,7 @@ class Users extends \yii\db\ActiveRecord
             'id' => 'ID',
             'login' => 'Login',
             'password' => 'Password',
-            'role' => 'Role',
+            'role_id' => 'Role ID',
         ];
     }
     public function getRole(){

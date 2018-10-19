@@ -8,8 +8,8 @@ use yii\base\Model;
 
 class Task extends Model{
 
-    public $welcome;
-    public $sayHello;
+    public $title;
+    public $content;
 
 
     /**
@@ -18,17 +18,24 @@ class Task extends Model{
     public function rules()
     {
         return [
-            [['welcome', 'sayHello'], 'app\\validators\\MyValidator'],
+            [['title'], 'myValidator'],
+            [['content'], 'safe']
         ];
     }
 
-   // public function myValidate($model, $attribute)
-   // {
-    //    $attributeValue = $model->$attribute;
-     //   if (!is_string($attributeValue)) {
-     //       $this->addError($model, $attribute, 'Значения должны быть строкой');
-     //   }
-   // }
+    public function myValidate($attribute, $params)
+    {
+        if ($this->$attribute !='task') {
+            $this->addError($attribute, 'Валидация не прошла!');
+        }
+    }
+
+    public function fields()
+    {
+        return [
+          'name' =>'title'
+        ];
+    }
 }
 
 

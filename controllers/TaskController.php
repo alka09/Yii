@@ -11,26 +11,26 @@ class TaskController extends Controller
     public function actionIndex()
     {
 
-        $model = new Task();
-        $model->load([
-            'dfsadf' => [
-                'welcome' => '123456',
-                'sayHello' => 'fgkdhfjahsdlfa'
-            ],
-            'Task' => [
-                'welcome' => 'dhlskjdhLKJSF',
-                'sayHello' => 'kjdhfieuhwlkjbf'
-            ]
-        ]);
+        // $model = new Task();
+        //$model->load([
+        //     'dfsadf' => [
+        //        'title' => '123456',
+        //        'content' => 'fgkdhfjahsdlfa'
+        //    ],
+        //   'Task' => [
+        //       'title' => 'dhlskjdhLKJSF',
+        //       'content' => 'kjdhfieuhwlkjbf'
+        //   ]
+        //]);
 
         //var_dump($model);
         //exit;
 
 
-        return $this->render('index', [
-            'title' => 'Yii2 Framework',
-            'content' => 'Lesson 1'
-        ]);
+        // return $this->render('index', [
+        //    'title' => 'Yii2 Framework',
+        //   'content' => 'Lesson 1'
+        //]);
     }
 
     public function actionTask()
@@ -74,14 +74,13 @@ class TaskController extends Controller
 
         /*удаление
       $user = Users::findOne(1);
-      $user->delete();*/
+      $user->delete();
 
         var_dump(Users::findOne(2));
 
         $user = Users::getUserWithRole(2);
         var_dump($user);
 
-        exit;
+        exit;*/
     }
-
 }

@@ -14,11 +14,10 @@ class m181016_162540_create_task_table extends Migration
     {
         $this->createTable('task', [
             'id' => $this->primaryKey(),
-            'name_id' => $this->integer()->notNull(),
-            'task' => $this->string(128)->notNull(),
+            'name' => $this->string(128)->notNull(),
+            'date' => $this->dateTime(),
             'description' => $this->string(1024)->notNull(),
-            'created' => $this->dateTime(),
-            'user' => $this->string(50)->notNull()
+            'user_id' => $this->integer()->notNull()
         ]);
     }
 
