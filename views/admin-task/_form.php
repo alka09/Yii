@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->dropDownList((Yii::find()->all('id','name'),(['prompt'=>'Select name'])) ?>
 
     <?= $form->field($model, 'date')->textInput(['type' => 'date']) ?>
 

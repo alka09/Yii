@@ -3,10 +3,12 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
-//use app\validators\MyValidator;
 
-class Task extends Model{
+
+class Test extends Model
+{
 
     public $title;
     public $content;
@@ -18,7 +20,7 @@ class Task extends Model{
     public function rules()
     {
         return [
-            [['title'], 'myValidator'],
+            [['title'], 'myValidate'],
             [['content'], 'safe']
         ];
     }

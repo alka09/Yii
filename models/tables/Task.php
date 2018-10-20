@@ -48,7 +48,7 @@ class Task extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'Name ID',
-            'task' => 'Task',
+            'task' => 'Test',
             'description' => 'Description',
             'created' => 'Created',
             'user' => 'User',

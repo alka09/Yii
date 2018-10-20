@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\tables\Task;
 
 /**
- * TaskSearch represents the model behind the search form of `app\models\tables\Task`.
+ * TaskSearch represents the model behind the search form of `app\models\tables\Test`.
  */
 class TaskSearch extends Task
 {
@@ -47,6 +47,9 @@ class TaskSearch extends Task
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 4
+            ]
         ]);
 
         $this->load($params);

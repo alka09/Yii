@@ -16,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Task', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Test', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?= /* echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -33,5 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);*/
+ echo \yii\widgets\ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => 'view',
+        'viewParams' => [
+            'hideBradcrumbs' => true
+        ]
+    ])
+ ?>
 </div>
