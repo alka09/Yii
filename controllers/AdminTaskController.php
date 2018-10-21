@@ -3,14 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\tables\Task;
-use app\models\TaskSearch;
+use app\models\tables\Tasks;
+use app\models\TasksSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AdminTaskController implements the CRUD actions for Test model.
+ * AdminTaskController implements the CRUD actions for Tasks model.
  */
 class AdminTaskController extends Controller
 {
@@ -30,12 +30,12 @@ class AdminTaskController extends Controller
     }
 
     /**
-     * Lists all Test models.
+     * Lists all Tasks models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TaskSearch();
+        $searchModel = new TasksSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class AdminTaskController extends Controller
     }
 
     /**
-     * Displays a single Test model.
+     * Displays a single Tasks model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class AdminTaskController extends Controller
     }
 
     /**
-     * Creates a new Test model.
+     * Creates a new Tasks model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Task();
+        $model = new Tasks();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class AdminTaskController extends Controller
     }
 
     /**
-     * Updates an existing Test model.
+     * Updates an existing Tasks model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class AdminTaskController extends Controller
     }
 
     /**
-     * Deletes an existing Test model.
+     * Deletes an existing Tasks model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class AdminTaskController extends Controller
     }
 
     /**
-     * Finds the Test model based on its primary key value.
+     * Finds the Tasks model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Task the loaded model
+     * @return Tasks the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Task::findOne($id)) !== null) {
+        if (($model = Tasks::findOne($id)) !== null) {
             return $model;
         }
 

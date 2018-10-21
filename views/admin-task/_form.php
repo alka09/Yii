@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\tables\Task */
+/* @var $model app\models\tables\Tasks */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="task-form">
+<div class="tasks-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->dropDownList(ArrayHelper::map(Users::find()->all(), ('login')) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'date')->textInput(['type' => 'date']) ?>
 

@@ -4,7 +4,6 @@ namespace app\models\tables;
 
 use Yii;
 
-
 /**
  * This is the model class for table "users".
  *
@@ -12,6 +11,7 @@ use Yii;
  * @property string $login
  * @property string $password
  * @property int $role_id
+ *
  * @property Roles $role
  */
 class Users extends \yii\db\ActiveRecord
@@ -31,10 +31,11 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['login', 'password'], 'required'],
-            [['role'], 'integer'],
+            [['role_id'], 'integer'],
             [['login'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 100],
+            [['password'], 'string', 'max' => 128],
             [['login'], 'unique'],
+            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
 
@@ -50,15 +51,12 @@ class Users extends \yii\db\ActiveRecord
             'role_id' => 'Role ID',
         ];
     }
-    public function getRole(){
-        return $this->hasOne(Roles::class, ['id' => 'role_id']);
-    }
 
-    public static function getUserWithRole($id){
-        return static::find()
-            ->where(['id' => 2])
-            ->with('role')
-            ->one();
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRole()
+    {
+        return $this->hasOne(Roles::className(), ['id' => 'role_id']);
     }
-
 }

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\tables\Task;
+use app\models\tables\Tasks;
 
 /**
- * TaskSearch represents the model behind the search form of `app\models\tables\Test`.
+ * TasksSearch represents the model behind the search form of `app\models\tables\Tasks`.
  */
-class TaskSearch extends Task
+class TasksSearch extends Tasks
 {
     /**
      * {@inheritdoc}
@@ -41,15 +41,12 @@ class TaskSearch extends Task
      */
     public function search($params)
     {
-        $query = Task::find();
+        $query = Tasks::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 4
-            ]
         ]);
 
         $this->load($params);

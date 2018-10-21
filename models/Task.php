@@ -3,12 +3,10 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
+//use app\validators\MyValidator;
 
-
-class Test extends Model
-{
+class Task extends Model{
 
     public $title;
     public $content;
@@ -20,7 +18,7 @@ class Test extends Model
     public function rules()
     {
         return [
-            [['title'], 'myValidate'],
+            [['title'], 'myValidator'],
             [['content'], 'safe']
         ];
     }
@@ -31,11 +29,11 @@ class Test extends Model
             $this->addError($attribute, 'Валидация не прошла!');
         }
     }
-
+    
     public function fields()
     {
         return [
-          'name' =>'title'
+          'name' =>'title'  
         ];
     }
 }

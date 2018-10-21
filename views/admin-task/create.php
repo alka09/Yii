@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\tables\Task */
+/* @var $model app\models\tables\Tasks */
 
-$this->title = 'Create Test';
+$this->title = 'Create Tasks';
 $this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="task-create">
+<div class="tasks-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
