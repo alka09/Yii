@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\Task;
 use app\models\tables\Tasks;
 use app\models\tables\Users;
+use app\models\Task;
 use app\models\User;
+use yii\data\ActiveDataProvider;
+use yii\debug\models\timeline\DataProvider;
 use yii\web\Controller;
 
 class TaskController extends Controller
@@ -13,17 +15,17 @@ class TaskController extends Controller
     public function actionIndex()
     {
 
-        $model = new Task();
-        $model->load([
-            'dfsadf' => [
-                'title' => '123456',
-                'content' => 'fgkdhfjahsdlfa'
-            ],
-            'Tasks' => [
-                'title' => 'dhlskjdhLKJSF',
-                'content' => 'kjdhfieuhwlkjbf'
-            ]
-        ]);
+        //$model = new Task();
+        //$model->load([
+        //    'dfsadf' => [
+        //        'title' => '123456',
+        //        'content' => 'fgkdhfjahsdlfa'
+        //    ],
+        //    'Tasks' => [
+        //        'title' => 'dhlskjdhLKJSF',
+        //        'content' => 'kjdhfieuhwlkjbf'
+        //    ]
+        //]);
 
         //var_dump($model);
         //exit;
@@ -33,12 +35,21 @@ class TaskController extends Controller
         //    'title' => 'Yii2 Framework',
         //   'content' => 'Lesson 1'
         //]);
+
+
+        $month = date('n');
+        $provider = new ActiveDataProvider([
+            'query' => Tasks::getTaskCurrentMonth($month)
+        ]);
+        return $this->render('index', [
+            'provider' => $provider
+        ]);
     }
 
     public function actionTask()
     {
         /*\Yii::$app->db->createCommand("
-        INSERT INTO test(title, content, created, executor_id) VALUES 
+        INSERT INTO test(title, content, created, executor_id) VALUES
         ('title1', 'content1', NOW(), '1'),
         ('title2', 'content2', NOW(), '2'),
         ('title3', 'content3', NOW(), '3'),
@@ -85,20 +96,5 @@ class TaskController extends Controller
 
         exit;*/
 
-
-$tasks = \Yii::$app->db->createCommand("
-        SELECT * FROM task WHERE MONTH(`created`) = MONTH(NOW()) AND YEAR(`created`) = YEAR(NOW())
-         ")
-->queryAll();
-    //        $this->layout = false;
-return $this->render('index', ['title' => $title,
-'content' => 'dz-1'
-'tasks' => $tasks]);
-}
-
-public
-function actionTask()
-{
-}
-
+    }
 }

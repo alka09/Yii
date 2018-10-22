@@ -1,2 +1,7 @@
-<h1><?=$title?></h1>
-<p><?=$content?></p>
+<?= \yii\widgets\ListView::widget([
+    'dataProvider' => $provider,
+    'itemView' => 'cart',
+    // 'viewsParams' => [
+    //// 'hideBreadcrumbs' => true
+    // ]
+]) ?>
