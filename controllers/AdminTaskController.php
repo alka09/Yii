@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\tables\Users;
+use app\models\User;
 use Yii;
 use app\models\tables\Tasks;
 use app\models\TasksSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,8 +73,13 @@ class AdminTaskController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
+
+
+
         return $this->render('create', [
             'model' => $model,
+            'users' => $users
         ]);
     }
 

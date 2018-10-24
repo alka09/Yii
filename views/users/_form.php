@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\tables\Users */
 /* @var $form yii\widgets\ActiveForm */
+/**@var $roles array*/
+
 ?>
 
 <div class="users-form">
@@ -16,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'role_id')->textInput() ?>
+    <?= $form->field($model, 'role_id')->dropDownList($roles) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

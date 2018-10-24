@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\tables\Roles;
 use Yii;
 use app\models\tables\Users;
 use app\models\UsersSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,9 +72,15 @@ class UsersController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $roles = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
+
+
+
         return $this->render('create', [
             'model' => $model,
+            'roles' => $roles
         ]);
+
     }
 
     /**

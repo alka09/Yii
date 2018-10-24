@@ -2,40 +2,16 @@
 
 namespace app\controllers;
 
+use app\behaviors\MyBehavior;
 use app\models\tables\Tasks;
-use app\models\tables\Users;
-use app\models\Task;
-use app\models\User;
+use app\models\Test;
 use yii\data\ActiveDataProvider;
-use yii\debug\models\timeline\DataProvider;
 use yii\web\Controller;
 
 class TaskController extends Controller
 {
     public function actionIndex()
     {
-
-        //$model = new Task();
-        //$model->load([
-        //    'dfsadf' => [
-        //        'title' => '123456',
-        //        'content' => 'fgkdhfjahsdlfa'
-        //    ],
-        //    'Tasks' => [
-        //        'title' => 'dhlskjdhLKJSF',
-        //        'content' => 'kjdhfieuhwlkjbf'
-        //    ]
-        //]);
-
-        //var_dump($model);
-        //exit;
-
-
-        // return $this->render('index', [
-        //    'title' => 'Yii2 Framework',
-        //   'content' => 'Lesson 1'
-        //]);
-
 
         $month = date('n');
         $provider = new ActiveDataProvider([
@@ -46,55 +22,48 @@ class TaskController extends Controller
         ]);
     }
 
-    public function actionTask()
+
+    public function actionTest()
     {
-        /*\Yii::$app->db->createCommand("
-        INSERT INTO test(title, content, created, executor_id) VALUES
-        ('title1', 'content1', NOW(), '1'),
-        ('title2', 'content2', NOW(), '2'),
-        ('title3', 'content3', NOW(), '3'),
-        ('title4', 'content4', NOW(), '4')
-        ")->execute();
+        /*   Event::on(Users::class, Users::EVENT_AFTER_INSERT, function ($event) {
+               $task = new Tasks([
+                   'name' => 'Ознакомиться с проектом',
+                   'date' => date("Y-m-d"),
+                   'description' => 'Новый проект',
+                   'user_id' => $event->sender->id
+               ]);
+               $task->save();
+           });
 
-        $id = 1;
+           $user = new Users();
+           $user->login = 'Vasechkim';
+           $user->password = 'qwerty';
+           $user->save();
+   */
 
-        $res = \Yii::$app->db->createCommand("
-        select * from test where id = :id
-        ")
-            ->bindParam('id', $id)
-            ->queryOne();
-        var_dump($res);*/
-        //извлечение данных
-        /*$user = Users::findOne(1);
-        var_dump($user);  */
+        /*    $handler1=function ($event){
 
-        /*Создание новой записи
+                echo "Первый обработчик сработал $event->message!";
+            };
 
-         $user = new Users();
-         $user->login = "pupkin";
-         $user->password = md5("qwerty");
-         $user->role = 1;
+            Event::on(Test::class, Test::EVENT_FOO_START, $handler1);
+            $model = new Test();
+        $model->foo();*/
+        // $model->on(Test::EVENT_FOO_START, $handler1);
 
-         $user->save();   */
+        $model = new Test();
 
-        /*Чтение
+        $model ->attachBehavior('my', [
+           'class' => MyBehavior::class,
+           'message' =>  'adfafas'
+        ]);
 
-      $user = Users::findOne(1);
-      $user->isNewRecord = true;
-      $user->id = null;
-      $user->login = 'admin';
-      $user->save(); */
+        $model->detachBehavior('my');
 
-        /*удаление
-      $user = Users::findOne(1);
-      $user->delete();
+        $model->title = '1231534534';
+        $model->bar();
 
-        var_dump(Users::findOne(2));
 
-        $user = Users::getUserWithRole(2);
-        var_dump($user);
-
-        exit;*/
-
+        exit;
     }
 }

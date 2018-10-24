@@ -54,6 +54,11 @@ class SiteController extends Controller
         ];
     }
 
+
+    public function actionCapcha(){
+
+    }
+
     /**
      * Displays homepage.
      *
