@@ -4,8 +4,10 @@ namespace app\controllers;
 
 use app\behaviors\MyBehavior;
 use app\models\tables\Tasks;
+use app\models\tables\Users;
 use app\models\Test;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class TaskController extends Controller
@@ -14,18 +16,23 @@ class TaskController extends Controller
     {
 
         $month = date('n');
+        $id = 1;
         $provider = new ActiveDataProvider([
-            'query' => Tasks::getTaskCurrentMonth($month)
+            'query' => Tasks::getTaskCurrentMonth($month, $id)
         ]);
+
+        $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
+
         return $this->render('index', [
-            'provider' => $provider
+            'provider' => $provider,
+            'users' => $users
         ]);
     }
 
 
     public function actionTest()
     {
-        /*   Event::on(Users::class, Users::EVENT_AFTER_INSERT, function ($event) {
+           Event::on(Tasks::class, Tasks::EVENT_AFTER_INSERT, function ($event) {
                $task = new Tasks([
                    'name' => 'Ознакомиться с проектом',
                    'date' => date("Y-m-d"),
@@ -39,7 +46,7 @@ class TaskController extends Controller
            $user->login = 'Vasechkim';
            $user->password = 'qwerty';
            $user->save();
-   */
+
 
         /*    $handler1=function ($event){
 
