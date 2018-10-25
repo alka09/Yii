@@ -2,7 +2,8 @@
 
 namespace app\models\tables;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "tasks".
@@ -17,6 +18,33 @@ use Yii;
  */
 class Tasks extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                /*'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',*/
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
+    /**
+     * Поиск по диапазону дат, начальная дата
+     * @var string
+     */
+
+    public $createdFrom;
+
+    /**
+     * Поиск по диапазону дат, конечная дата
+     * @var string
+     */
+
+    public $createdTo;
+
     /**
      * {@inheritdoc}
      */
@@ -37,6 +65,8 @@ class Tasks extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 128],
             [['description'], 'string', 'max' => 1024],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['fromDate'], 'safe', 'on' => 'search'],
+            [['toDate'], 'safe', 'on' => 'search']
         ];
     }
 
@@ -61,8 +91,10 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
-    public static function getTaskCurrentMonth($month) {
+
+    public static function getTaskCurrentMonth($month)
+    {
         return static::find()
             ->where(["MONTH(date)" => $month]);
-     }
+    }
 }

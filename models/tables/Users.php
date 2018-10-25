@@ -35,6 +35,7 @@ class Users extends \yii\db\ActiveRecord
             [['login'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 128],
             [['login'], 'unique'],
+            [['email'], 'string', 'max' => 128],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
@@ -49,6 +50,7 @@ class Users extends \yii\db\ActiveRecord
             'login' => 'Login',
             'password' => 'Password',
             'role_id' => 'Role ID',
+            'email' => 'Email'
         ];
     }
 

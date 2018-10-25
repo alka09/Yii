@@ -55,6 +55,7 @@ class AdminTaskController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -70,6 +71,7 @@ class AdminTaskController extends Controller
         $model = new Tasks();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

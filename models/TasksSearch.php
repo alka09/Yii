@@ -15,6 +15,7 @@ class TasksSearch extends Tasks
     /**
      * {@inheritdoc}
      */
+
     public function rules()
     {
         return [
@@ -42,12 +43,30 @@ class TasksSearch extends Tasks
     public function search($params)
     {
         $query = Tasks::find();
+       $query->andFilterWhere(['>=', 'creation_date', $this->createdFrom])
+            ->andFilterWhere(['<=', 'creation_date', $this->createdTo]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        if(!empty($this->fromDate) && empty($this->toDate)) {
+            $criteria->condition = "date >= '" .
+                strtotime($this->fromDate) .
+                "'";
+        } elseif(!empty($this->toDate) && empty($this->fromDate)) {
+            $criteria->condition = "date <= '" .
+                strtotime($this->toDate).
+                "'";
+        } elseif(!empty($this->toDate) && !empty($this->fromDate)) {
+            $criteria->condition = "date  >= '" .
+                strtotime($this->fromDate) .
+                "' and date <= '" .
+                strtotime($this->toDate) .
+                "'";
+        }
 
         $this->load($params);
 
@@ -67,6 +86,10 @@ class TasksSearch extends Tasks
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+
+
+
         return $dataProvider;
     }
+
 }
