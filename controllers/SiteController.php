@@ -136,9 +136,7 @@ class SiteController extends Controller
             $user = new User();
             $user->username = $model->username;
             $user->password = \Yii::$app->security->generatePasswordHash($model->password);
-            echo '<pre>';
-            print_r($user);
-            die;
+
         }
         return $this->render('signup', compact('model'));
     }
