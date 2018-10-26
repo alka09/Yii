@@ -55,7 +55,7 @@ class AdminTaskController extends Controller
      */
     public function actionView($id)
     {
-
+Yii::$app->events;
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -72,16 +72,28 @@ class AdminTaskController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            $user = Users::findOne($model->user_id);
+
+
+            $message = "Уважаемый {$user->login}! На вас поставлена новая задача {$model->name}. 
+            Дедлайн до {$model->date}";
+
+            Yii::$app->mailer
+                ->compose()
+                ->setTo($user->email)
+                ->setFrom([$this->email => $this->name])
+                ->setSubject('Новая задача')
+                ->setTextBody($message)
+                ->send();
+
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
-
-
 
         return $this->render('create', [
             'model' => $model,
-            'users' => $users
+            'users' => $users,
         ]);
     }
 

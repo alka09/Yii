@@ -11,6 +11,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $password;
     public $authKey;
     public $accessToken;
+    public $email;
 
     //private static $users = [
     //    '100' => [
@@ -40,6 +41,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
                 'id' => $user->id,
                 'username' => $user->login,
                 'password' => $user->password,
+                'email' => $user->email,
             ]);
         };
         return null;
@@ -78,6 +80,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
                 'id' => $user->id,
                 'username' => $user->login,
                 'password' => $user->password,
+                'email' => $user->email,
             ]);
         };
         return null;

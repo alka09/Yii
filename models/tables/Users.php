@@ -11,7 +11,7 @@ use Yii;
  * @property string $login
  * @property string $password
  * @property int $role_id
- *
+ * @property string $email
  * @property Roles $role
  */
 class Users extends \yii\db\ActiveRecord
@@ -30,7 +30,7 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['login', 'password'], 'required'],
+            [['login', 'password', 'email'], 'required'],
             [['role_id'], 'integer'],
             [['login'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 128],

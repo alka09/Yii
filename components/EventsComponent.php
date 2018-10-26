@@ -27,7 +27,6 @@ class EventsComponent extends Component
             $user = Users::findOne($model->user_id);
             $message = "Уважаемый {$user->login}! На вас поставлена новая задача {$model->name}. Дедлайн до {$model->date}";
 
-
             \Yii::$app->mailer->compose()
                 ->setTo($user->email)
                 //->setFrom([$this->email => $this->name])

@@ -2,7 +2,7 @@
     'model' => $model,
     'attributes' => [
         'name',
-        'description:ntext',
+        'description:html',
         'date',
     ],
 

@@ -72,8 +72,8 @@ class UsersController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $roles = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
 
+        $roles = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
 
 
         return $this->render('create', [
