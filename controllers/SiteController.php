@@ -1,14 +1,17 @@
 <?php
 namespace app\controllers;
+
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\SignUpForm;
-use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
+use app\models\tables\Users;
+use app\models\User;
+
 class SiteController extends Controller
 {
     /**
@@ -109,12 +112,41 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionSignup(){
+   /* public function actionSignup(){
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $model = new SignupForm();
+        if($model->load(\Yii::$app->request->post()) && $model->validate()){
+            $user = new Users();
+            $user->login = $model->login;
+            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
+            if($user->save()){
+                return $this->goHome();
+            }
+        }
 
+        return $this->render('signup', compact('model'));
+    }*/
+
+    public function actionSignup()
+    {
+        if(!Yii::$app->user->isGuest)
+        {
+            return $this->goHome();
+        }
+        $model = new SignupForm();
+        if($model->load(\Yii::$app->request->post()) && $model->validate())
+        {
+            $user = new Users();
+            $user->login = $model->login;
+            $user->email = $model->email;
+            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
+            if($user->save())
+            {
+                return $this->goHome();
+            }
+        }
         return $this->render('signup', compact('model'));
     }
 

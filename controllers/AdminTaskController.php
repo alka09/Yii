@@ -88,6 +88,7 @@ Yii::$app->events;
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
         $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
 
         return $this->render('create', [

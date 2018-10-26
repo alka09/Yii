@@ -66,4 +66,5 @@ class Users extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Roles::className(), ['id' => 'role_id']);
     }
+
 }

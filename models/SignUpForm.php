@@ -16,6 +16,7 @@ class SignUpForm extends Model
     {
         return [
             [['login', 'password', 'email'], 'required', 'message' => 'Обязательно к заполнению!'],
+            ['login', 'unique', 'targetClass' => User::className(),  'message' => 'Этот логин уже занят'],
         ];
     }
 
@@ -27,7 +28,4 @@ class SignUpForm extends Model
             'email' => 'email'
         ];
     }
-
-
-
 }
