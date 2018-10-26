@@ -14,6 +14,8 @@ use Yii;
  * @property string $email
  * @property string $name
  * @property Roles $role
+ * @property integer $created_at
+ * @property integer $updated_at
  */
 class Users extends \yii\db\ActiveRecord
 {

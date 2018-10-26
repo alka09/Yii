@@ -5,23 +5,26 @@ namespace app\models;
 
 use yii\base\Model;
 
+
 class SignUpForm extends Model
 {
-    public $username;
+    public $login;
     public $password;
+    public $email;
 
     public function rules()
     {
         return [
-            [['username', 'password'], 'required', 'message' => 'Обязательно к заполнению!'],
+            [['login', 'password', 'email'], 'required', 'message' => 'Обязательно к заполнению!'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'username' => 'Логин',
+            'login' => 'Логин',
             'password' => 'Пароль',
+            'email' => 'email'
         ];
     }
 

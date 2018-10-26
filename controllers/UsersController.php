@@ -6,6 +6,7 @@ use app\models\tables\Roles;
 use Yii;
 use app\models\tables\Users;
 use app\models\UsersSearch;
+use app\models\SignUpForm;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -132,4 +133,5 @@ class UsersController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

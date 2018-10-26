@@ -32,20 +32,20 @@ class TaskController extends Controller
 
     public function actionTest()
     {
-           Event::on(Tasks::class, Tasks::EVENT_AFTER_INSERT, function ($event) {
-               $task = new Tasks([
-                   'name' => 'Ознакомиться с проектом',
-                   'date' => date("Y-m-d"),
-                   'description' => 'Новый проект',
-                   'user_id' => $event->sender->id
-               ]);
-               $task->save();
-           });
+        Event::on(Tasks::class, Tasks::EVENT_AFTER_INSERT, function ($event) {
+            $task = new Tasks([
+                'name' => 'Ознакомиться с проектом',
+                'date' => date("Y-m-d"),
+                'description' => 'Новый проект',
+                'user_id' => $event->sender->id
+            ]);
+            $task->save();
+        });
 
-           $user = new Users();
-           $user->login = 'Vasechkim';
-           $user->password = 'qwerty';
-           $user->save();
+        $user = new Users();
+        $user->login = 'Vasechkim';
+        $user->password = 'qwerty';
+        $user->save();
 
 
         /*    $handler1=function ($event){
@@ -60,17 +60,30 @@ class TaskController extends Controller
 
         $model = new Test();
 
-        $model ->attachBehavior('my', [
-           'class' => MyBehavior::class,
-           'message' =>  'adfafas'
+        $model->attachBehavior('my', [
+            'class' => MyBehavior::class,
+            'message' => 'adfafas'
         ]);
 
         $model->detachBehavior('my');
-
         $model->title = '1231534534';
         $model->bar();
-
-
         exit;
+    }
+
+    public function actionCache()
+    {
+        $number = rand();
+        $key = 'number';
+        $cache = \Yii::$app->cache;
+
+        if ($cache->exists($key)){
+            $number = $cache->get($key);
+        }
+        \Yii::$app->cache->set("number", $number);
+
+        var_dump($number);
+        exit;
+
     }
 }

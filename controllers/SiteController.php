@@ -1,7 +1,5 @@
 <?php
-
 namespace app\controllers;
-
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\SignUpForm;
@@ -11,7 +9,6 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
-
 class SiteController extends Controller
 {
     /**
@@ -39,7 +36,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -55,13 +51,9 @@ class SiteController extends Controller
             ],
         ];
     }
-
-
     public function actionCapcha()
     {
-
     }
-
     /**
      * Displays homepage.
      *
@@ -71,7 +63,6 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
-
     /**
      * Login action.
      *
@@ -82,18 +73,15 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
         ]);
     }
-
     /**
      * Logout action.
      *
@@ -102,10 +90,8 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
-
     /**
      * Displays contact page.
      *
@@ -114,10 +100,8 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
         return $this->render('contact', [
@@ -125,19 +109,12 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionSignup()
-    {
+    public function actionSignup(){
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        $model = new SignupForm();
 
-        $model = new SignUpForm();
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            $user = new User();
-            $user->username = $model->username;
-            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
-
-        }
         return $this->render('signup', compact('model'));
     }
 
