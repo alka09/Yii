@@ -52,22 +52,6 @@ class TasksSearch extends Tasks
             'query' => $query,
         ]);
 
-        if(!empty($this->fromDate) && empty($this->toDate)) {
-            $criteria->condition = "date >= '" .
-                strtotime($this->fromDate) .
-                "'";
-        } elseif(!empty($this->toDate) && empty($this->fromDate)) {
-            $criteria->condition = "date <= '" .
-                strtotime($this->toDate).
-                "'";
-        } elseif(!empty($this->toDate) && !empty($this->fromDate)) {
-            $criteria->condition = "date  >= '" .
-                strtotime($this->fromDate) .
-                "' and date <= '" .
-                strtotime($this->toDate) .
-                "'";
-        }
-
         $this->load($params);
 
         if (!$this->validate()) {

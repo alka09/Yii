@@ -66,5 +66,17 @@ class Users extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Roles::className(), ['id' => 'role_id']);
     }
+    public function addUser()
+    {
+        $user = new Users();
+        $user->login = $this->login;
+        $user->password = \Yii::$app->security->generatePasswordHash($this->password);
+        $user->role_id = $this->role_id;
+        $user->email = $this->email;
+//        var_dump($user->save());
+        $user->save();
+    }
+
+
 
 }

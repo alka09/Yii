@@ -2,15 +2,14 @@
 
 namespace app\controllers;
 
-use app\models\tables\Users;
-use app\models\User;
-use Yii;
 use app\models\tables\Tasks;
+use app\models\tables\Users;
 use app\models\TasksSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AdminTaskController implements the CRUD actions for Tasks model.
@@ -55,7 +54,7 @@ class AdminTaskController extends Controller
      */
     public function actionView($id)
     {
-Yii::$app->events;
+        //Yii::$app->events;
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -109,11 +108,13 @@ Yii::$app->events;
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+
         ]);
     }
 

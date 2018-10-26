@@ -11,6 +11,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public $accessToken;
     public $email;
 
+    public static function tableName()
+    {
+        return 'users';
+    }
 
     private static $users = [
         '100' => [

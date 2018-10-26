@@ -15,12 +15,12 @@ use yii\widgets\ActiveForm;
         'id' => 'task_create',
     ]); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::class, [
-        'dateFormat' => 'yyyy-MM-dd',
-        'language' => 'ru']
-    ) ?>
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'user_id')->dropDownList($users) ?>
+    <?= $form->field($model, 'user_id')->dropDownList('users') ?>
+    <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::class, [
+            'dateFormat' => 'yyyy-MM-dd',
+            'language' => 'ru']
+    ) ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

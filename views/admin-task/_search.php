@@ -19,7 +19,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'date') ?>
+    <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::class, [
+            'dateFormat' => 'yyyy-MM-dd',
+            'language' => 'ru']
+    ) ?>
 
     <?= $form->field($model, 'description') ?>
 

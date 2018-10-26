@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use yii;
 use app\behaviors\MyBehavior;
 use app\models\tables\Tasks;
 use app\models\tables\Users;
@@ -9,6 +10,7 @@ use app\models\Test;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use app\components\EventsComponent;
 
 class TaskController extends Controller
 {
@@ -29,6 +31,40 @@ class TaskController extends Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = tasks::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
+        return $this->render('update', [
+            'model' => $model,
+            'users' => $users
+        ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+        return $this->redirect(['index']);
+    }
+
 
     public function actionTest()
     {
@@ -47,43 +83,46 @@ class TaskController extends Controller
         $user->password = 'qwerty';
         $user->save();
 
+    }
+    /*       $handler1 = function ($event) {
 
-        /*    $handler1=function ($event){
+               echo "Первый обработчик сработал $event->message!";
 
-                echo "Первый обработчик сработал $event->message!";
-            };
-
-            Event::on(Test::class, Test::EVENT_FOO_START, $handler1);
-            $model = new Test();
-        $model->foo();*/
+       }
+   /*
+               Event::on(Test::class, Test::EVENT_FOO_START, $handler1);
+               $model = new Test();
+           $model->foo();*/
         // $model->on(Test::EVENT_FOO_START, $handler1);
 
-        $model = new Test();
+        /* $model = new Test();
 
-        $model->attachBehavior('my', [
-            'class' => MyBehavior::class,
-            'message' => 'adfafas'
-        ]);
+         $model->attachBehavior('my', [
+             'class' => MyBehavior::class,
+             'message' => 'adfafas'
+         ]);
 
-        $model->detachBehavior('my');
-        $model->title = '1231534534';
-        $model->bar();
-        exit;
-    }
+         $model->detachBehavior('my');
+         $model->title = '1231534534';
+         $model->bar();
+         exit;
+     }*/
 
-    public function actionCache()
-    {
-        $number = rand();
-        $key = 'number';
-        $cache = \Yii::$app->cache;
+        public
+        function actionCache()
+        {
+            $number = rand();
+            $key = 'number';
+            $cache = \Yii::$app->cache;
 
-        if ($cache->exists($key)){
-            $number = $cache->get($key);
+            if ($cache->exists($key)) {
+                $number = $cache->get($key);
+            }
+            \Yii::$app->cache->set("number", $number);
+
+            //var_dump($number);
+            exit;
+
         }
-        \Yii::$app->cache->set("number", $number);
 
-        var_dump($number);
-        exit;
-
-    }
 }

@@ -60,7 +60,8 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'description'], 'required'],
-            [['date'], 'safe'],
+            [['date'], 'default', 'value' => date('Y-m-d:H:i:s')],
+            [['date'], 'compare', 'compareValue' => date('Y-m-d'), 'operator' => '>='],
             [['user_id'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['description'], 'string', 'max' => 1024],

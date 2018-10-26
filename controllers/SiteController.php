@@ -131,23 +131,18 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
-        if(!Yii::$app->user->isGuest)
-        {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $model = new SignupForm();
-        if($model->load(\Yii::$app->request->post()) && $model->validate())
-        {
-            $user = new Users();
-            $user->login = $model->login;
-            $user->email = $model->email;
-            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
-            if($user->save())
-            {
-                return $this->goHome();
-            }
+        $model = new Users();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            var_dump($model->getAddUser());
+            $model->addUser();
         }
-        return $this->render('signup', compact('model'));
+
+        return $this->render('signup', [
+            'model' => $model
+        ]);
     }
 
     /**
