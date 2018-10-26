@@ -81,7 +81,6 @@ Yii::$app->events;
             Yii::$app->mailer
                 ->compose()
                 ->setTo($user->email)
-                ->setFrom([$this->email => $this->name])
                 ->setSubject('Новая задача')
                 ->setTextBody($message)
                 ->send();
