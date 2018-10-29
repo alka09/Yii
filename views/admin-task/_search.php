@@ -15,16 +15,16 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?/*= $form->field($model, 'id') */?>
 
-    <?= $form->field($model, 'name') ?>
+    <?/*= $form->field($model, 'name') */?>
 
     <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::class, [
             'dateFormat' => 'yyyy-MM-dd',
             'language' => 'ru']
     ) ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?/*= $form->field($model, 'description') */?>
 
     <?= $form->field($model, 'user_id') ?>
 

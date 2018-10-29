@@ -1,10 +1,15 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\tables\tasks */
+/* @var $form yii\widgets\ActiveForm */
+/* @var $users  array */
 
 ?>
-
+<div class="tasks-form">
 
 <?php $form = ActiveForm::begin() ?>
 
@@ -18,3 +23,5 @@ use yii\bootstrap\ActiveForm;
 </div>
 
 <?php ActiveForm::end() ?>
+</div>
+

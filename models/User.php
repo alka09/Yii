@@ -37,20 +37,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        //if ($user = Users::findOne($id)) {
-        //    return new static([
-        //        'id' => $user->id,
-        //        'username' => $user->login,
-        //        'password' => $user->password,
-         //       'email' => $user->email,
-         //   ]);
-        //};
-        //return null;
-
-       // return static::findOne($id);
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-
+        if ($user = Users::findOne($id)) {
+            return new static([
+                'id' => $user->id,
+                'username' => $user->login,
+                'password' => $user->password,
+                'email' => $user->email,
+            ]);
+        }
     }
+
     /**
      * {@inheritdoc}
      */
@@ -118,6 +114,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return \Yii::$app->security->validatePassword($password, $this->password);
     }
 }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\tables\Tasks;
 use app\models\tables\Users;
+use app\models\User;
 use app\models\TasksSearch;
 use Yii;
 use yii\filters\VerbFilter;
@@ -112,8 +113,11 @@ class AdminTaskController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
+
         return $this->render('update', [
             'model' => $model,
+            'users' => $users,
 
         ]);
     }

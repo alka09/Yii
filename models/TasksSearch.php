@@ -43,8 +43,6 @@ class TasksSearch extends Tasks
     public function search($params)
     {
         $query = Tasks::find();
-       $query->andFilterWhere(['>=', 'creation_date', $this->createdFrom])
-            ->andFilterWhere(['<=', 'creation_date', $this->createdTo]);
 
         // add conditions that should always apply here
 
