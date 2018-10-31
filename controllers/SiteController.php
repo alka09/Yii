@@ -1,16 +1,17 @@
 <?php
+
 namespace app\controllers;
 
 use app\models\ContactForm;
 use app\models\LoginForm;
-use app\models\SignUpForm;
+use app\models\tables\Users;
+use app\models\tables\Roles;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
-use app\models\tables\Users;
-use app\models\User;
+use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
@@ -39,6 +40,7 @@ class SiteController extends Controller
             ],
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -54,9 +56,11 @@ class SiteController extends Controller
             ],
         ];
     }
+
     public function actionCapcha()
     {
     }
+
     /**
      * Displays homepage.
      *
@@ -66,6 +70,7 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
     /**
      * Login action.
      *
@@ -85,6 +90,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
     /**
      * Logout action.
      *
@@ -95,6 +101,7 @@ class SiteController extends Controller
         Yii::$app->user->logout();
         return $this->goHome();
     }
+
     /**
      * Displays contact page.
      *
@@ -112,36 +119,21 @@ class SiteController extends Controller
         ]);
     }
 
-   /* public function actionSignup(){
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        $model = new SignupForm();
-        if($model->load(\Yii::$app->request->post()) && $model->validate()){
-            $user = new Users();
-            $user->login = $model->login;
-            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
-            if($user->save()){
-                return $this->goHome();
-            }
-        }
-
-        return $this->render('signup', compact('model'));
-    }*/
-
     public function actionSignup()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $model = new Users();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 //            var_dump($model->getAddUser());
             $model->addUser();
         }
-
+        $role = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
         return $this->render('signup', [
-            'model' => $model
+            'model' => $model,
+            'role' => $role
         ]);
     }
 
