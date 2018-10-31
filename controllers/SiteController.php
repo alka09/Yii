@@ -5,10 +5,13 @@ namespace app\controllers;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\SignUpForm;
+use app\models\tables\Roles;
+use app\models\tables\Users;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -131,16 +134,19 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new SignUpForm();
+        $model = new Users();
+        $role = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
+
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            $user = new User();
-            $user->username = $model->username;
-            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
-            echo '<pre>';
-            print_r($user);
-            die;
+           $model -> addUser();
+
+            return $this->refresh();
         }
-        return $this->render('signup', compact('model'));
+
+        return $this->render('signup', [
+            'model' => $model,
+            'role' => $role,
+        ]);
     }
 
     /**

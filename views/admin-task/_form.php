@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'id' => 'task_create',
     ]); ?>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput() ?>
     <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::class, [
         'dateFormat' => 'yyyy-MM-dd',
         'language' => 'ru']

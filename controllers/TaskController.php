@@ -29,48 +29,10 @@ class TaskController extends Controller
         ]);
     }
 
+    public function actionView(){
 
-    public function actionTest()
-    {
-           Event::on(Tasks::class, Tasks::EVENT_AFTER_INSERT, function ($event) {
-               $task = new Tasks([
-                   'name' => 'Ознакомиться с проектом',
-                   'date' => date("Y-m-d"),
-                   'description' => 'Новый проект',
-                   'user_id' => $event->sender->id
-               ]);
-               $task->save();
-           });
-
-           $user = new Users();
-           $user->login = 'Vasechkim';
-           $user->password = 'qwerty';
-           $user->save();
-
-
-        /*    $handler1=function ($event){
-
-                echo "Первый обработчик сработал $event->message!";
-            };
-
-            Event::on(Test::class, Test::EVENT_FOO_START, $handler1);
-            $model = new Test();
-        $model->foo();*/
-        // $model->on(Test::EVENT_FOO_START, $handler1);
-
-        $model = new Test();
-
-        $model ->attachBehavior('my', [
-           'class' => MyBehavior::class,
-           'message' =>  'adfafas'
-        ]);
-
-        $model->detachBehavior('my');
-
-        $model->title = '1231534534';
-        $model->bar();
-
-
-        exit;
+        $id = \Yii::$app->request->get('id');
+        $model = Tasks::findOne($id);
+        return $this->render('view', ['model' => $model]);
     }
 }

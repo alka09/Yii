@@ -15,6 +15,7 @@ use yii\db\Expression;
  * @property int $user_id
  *
  * @property Users $user
+ * @property TasksAttachments[] $attachments
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -60,7 +61,8 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'description'], 'required'],
-            [['date'], 'safe'],
+            [['date'], 'default', 'value' => date('Y-m-d:H:i:s')],
+            [['date'], 'compare', 'compareValue' => date('Y-m-d'), 'operator' => '>='],
             [['user_id'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['description'], 'string', 'max' => 1024],
@@ -90,6 +92,14 @@ class Tasks extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAttachments()
+    {
+        return $this->hasMany(TasksAttachments::class, ['task_id' => 'id']);
     }
 
     public static function getTaskCurrentMonth($month)
