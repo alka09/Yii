@@ -66,6 +66,13 @@ class Users extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Roles::className(), ['id' => 'role_id']);
     }
+
+    public function getTasks()
+    {
+        return $this->hasMany(Tasks::className(), ['user_id' => 'id']);
+    }
+
+
     public function addUser()
     {
         $user = new Users();
