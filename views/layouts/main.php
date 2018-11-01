@@ -1,13 +1,15 @@
-
 <?php
+
 /* @var $this \yii\web\View */
 /* @var $content string */
+
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -36,17 +38,11 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => Yii::t('app', 'Menu_language'),
-                'items' =>[
-                        ['label' => 'русский', 'url' => '#'],
-                    ['label' => 'английский', 'url' => '#'],
-                ]
-                ],
+            ['label' => Yii::t('common', 'Главная'), 'url' => ['/site/index']],
+            ['label' => Yii::t('common', 'О проекте'), 'url' => ['/site/about']],
+            ['label' => Yii::t('common', 'Контакты'), 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -73,7 +69,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; My Company <?= date('Y') ?> | <?= $this->render('language')?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -5,9 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\tables\tasks
- *@var $model app\models\tables\TaskAttachments
- */
+/* @var $model app\models\tables\tasks */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Task', 'url' => ['index']];
@@ -33,5 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'user_id',
         ],
     ]) ?>
+
 
 </div>

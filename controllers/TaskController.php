@@ -2,17 +2,21 @@
 
 namespace app\controllers;
 
+use yii;
+use app\behaviors\MyBehavior;
 use app\models\tables\Tasks;
 use app\models\tables\Users;
-use yii;
+use app\models\Test;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use app\components\EventsComponent;
 
 class TaskController extends Controller
 {
     public function actionIndex()
     {
+
         $month = date('n');
         $id = 1;
         $provider = new ActiveDataProvider([
@@ -62,10 +66,10 @@ class TaskController extends Controller
     }
 
 
-    // public function actionTest()
-    // {
+   // public function actionTest()
+   // {
     //    Event::on(Tasks::class, Tasks::EVENT_AFTER_INSERT, function ($event) {
-    //       $task = new Tasks([
+     //       $task = new Tasks([
     //            'name' => 'Ознакомиться с проектом',
     //            'date' => date("Y-m-d"),
     //            'description' => 'Новый проект',
@@ -74,29 +78,30 @@ class TaskController extends Controller
     //        $task->save();
     //    });
 
-    //$user = new Users();
-    //$user->login = 'Vasechkim';
-    //$user->password = 'qwerty';
-    //$user->save();
+        //$user = new Users();
+        //$user->login = 'Vasechkim';
+        //$user->password = 'qwerty';
+        //$user->save();
 
     //}
 
-    public
-    function actionCache()
-    {
-        $number = rand();
-        $key = 'number';
-        $cache = \Yii::$app->cache;
+        public
+        function actionCache()
+        {
+            $number = rand();
+            $key = 'number';
+            $cache = \Yii::$app->cache;
 
-        if ($cache->exists($key)) {
-            $number = $cache->get($key);
+            if ($cache->exists($key)) {
+                $number = $cache->get($key);
+            }
+            \Yii::$app->cache->set("number", $number);
+
+            //var_dump($number);
+            exit;
+
         }
-        \Yii::$app->cache->set("number", $number);
 
-        //var_dump($number);
-        exit;
-
-    }
 
 
 }
