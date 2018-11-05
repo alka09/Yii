@@ -17,7 +17,6 @@ if($this->beginCache("216000"))
     ?>
 
     <?= \yii\grid\GridView::widget([
-//    'model' => $model,
         'dataProvider' => $provider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -33,6 +32,7 @@ if($this->beginCache("216000"))
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
+
     ])
 
     ?>

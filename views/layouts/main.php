@@ -40,9 +40,10 @@ AppAsset::register($this);
         'items' => [
             ['label' => Yii::t('common', 'Главная'), 'url' => ['/site/index']],
             ['label' => Yii::t('common', 'О проекте'), 'url' => ['/site/about']],
+            ['label' => Yii::t("common", 'Задачи'), 'url' => ['/task/index']],
             ['label' => Yii::t('common', 'Контакты'), 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => Yii::t("common", "login"), 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')

@@ -2,7 +2,8 @@
 
 namespace app\models\tables;
 
-use Yii;
+use Yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "users".
@@ -12,12 +13,13 @@ use Yii;
  * @property string $password
  * @property int $role_id
  * @property string $email
- * @property string $name
- * @property Roles $role
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $auth_key
+ * @property string $email_confirm_token
+ * @property string $password_reset_token
  */
-class Users extends \yii\db\ActiveRecord
+class Users extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -33,14 +35,17 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['login', 'password', 'email'], 'required'],
-            [['role_id'], 'integer'],
-            [['login'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 128],
-            [['login'], 'unique'],
-            [['email'], 'string', 'max' => 128],
-            [['name'], 'string', 'max' => 128],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['role_id' => 'id']],
+            ['login', 'required'],
+            ['login', 'string', 'max' => 50],
+            ['login', 'unique'],
+
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'unique', 'targetClass' => self::className(), 'message' => 'This email address has already been taken.'],
+            ['email', 'string', 'max' => 255],
+
+            ['password', 'required', 'string', 'max' => 128]
+
         ];
     }
 
@@ -55,7 +60,19 @@ class Users extends \yii\db\ActiveRecord
             'password' => 'Password',
             'role_id' => 'Role ID',
             'email' => 'Email',
-            'name' =>'Name',
+              ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 
@@ -73,7 +90,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
 
-    public function addUser()
+    public function getUser()
     {
         $user = new Users();
         $user->login = $this->login;
@@ -83,7 +100,6 @@ class Users extends \yii\db\ActiveRecord
 //        var_dump($user->save());
         $user->save();
     }
-
 
 
 }

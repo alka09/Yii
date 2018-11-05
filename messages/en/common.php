@@ -5,4 +5,6 @@ return [
     'О проекте' => 'About',
     'Контакты' => 'Contact',
     'Админ' => 'Admin',
+    'Регистрация' => 'Registration',
+    'Задачи' => 'Tasks',
 ];

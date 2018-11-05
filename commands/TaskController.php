@@ -12,15 +12,17 @@ use yii\helpers\Console;
 class TaskController extends Controller
 {
     public $message = "Hello";
-    /** Display "test" */
-    public function actiontTest()
+    /**
+     * Display "test"
+     */
+    public function actionTest($id)
     {
-       if ($user = Users::findOne($id)){
-           echo "{$this->message}, mr {$user->login}";
-           return ExitCode::OK;
-       }
-       return ExitCode::UNSPECIFIED_ERROR;
+        if ($user = Users::findOne($id)) {
+            echo "{$this->message}, mr {$user->login}!!!";
+            return ExitCode::OK;
+        }
+        return ExitCode::UNSPECIFIED_ERROR;
+//     var_dump($user->login);
     }
-
 
 }

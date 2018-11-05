@@ -133,7 +133,7 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 //            var_dump($model->getAddUser());
-            $model->addUser();
+            $model->getUser();
         }
         $role = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
         return $this->render('signup', [

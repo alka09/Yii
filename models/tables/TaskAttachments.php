@@ -3,6 +3,8 @@
 namespace app\models\tables;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "task_attachments".
@@ -13,7 +15,7 @@ use Yii;
  *
  * @property Tasks $task
  */
-class TaskAttachments extends \yii\db\ActiveRecord
+class TaskAttachments extends Model
 {
 
     public $image;
@@ -35,7 +37,7 @@ class TaskAttachments extends \yii\db\ActiveRecord
             [['task_id'], 'integer'],
             [['path'], 'string', 'max' => 255],
             [['task_id'], 'unique'],
-            [['image'], 'file', 'type' => 'jpeg, phg'],
+            [['image'], 'file', 'extensions' => 'jpeg, phg'],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::className(), 'targetAttribute' => ['task_id' => 'id']],
         ];
     }
