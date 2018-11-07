@@ -1,27 +1,19 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-//use yii\bootstrap\ActiveForm;
+use yii\grid\GridView;
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\tables\tasks */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $users  array */
 ?>
 
-
-<?php //var_dump($users)?>
-
-<?php
-if($this->beginCache("216000"))
-{
-    ?>
-
     <?= \yii\grid\GridView::widget([
-//    'model' => $model,
         'dataProvider' => $provider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-//        'id',
             'name',
             'description:ntext',
             'date',
@@ -36,5 +28,5 @@ if($this->beginCache("216000"))
     ])
 
     ?>
-    <?php $this->endCache();
+
 }?>

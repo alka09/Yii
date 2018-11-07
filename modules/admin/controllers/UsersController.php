@@ -98,19 +98,14 @@ class UsersController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        $roles = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
 
         return $this->render('update', [
             'model' => $model,
+            'roles' => $roles,
         ]);
     }
 
-    /**
-     * Deletes an existing Users model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();

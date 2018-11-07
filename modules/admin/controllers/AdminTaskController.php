@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\models\tables\Tasks;
 use app\models\tables\Users;
+use app\models\tables\TaskAttachments;
 use app\models\User;
 use app\models\TasksSearch;
 use Yii;
@@ -11,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * AdminTaskController implements the CRUD actions for Tasks model.
@@ -122,13 +124,6 @@ class AdminTaskController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Tasks model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -151,4 +146,44 @@ class AdminTaskController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    public function actionUpload()
+    {
+        $model = new TaskAttachments();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save();
+
+            $file = UploadedFile::getInstances($model, 'images');
+            foreach ($file as $file) {
+                $path =Yii::getAlias('@app').'/web/'.'/uploadImg/'. $file->name;
+                $file->saveAs($path);
+
+            }
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+    //public function actionUpload($id)
+    //{
+//
+    //    $model = new TaskAttachments();
+//
+     //   if (isset($_POST['TaskAttachments'])){
+//
+       //     $model -> attributes = $_POST['TaskAttachments'];
+       //     $model -> image = UploadedFile::getInstance($model, 'image');
+//
+       //     if ($model -> save()){
+       //         $model -> image -> saveAs('path/to/localFile');
+       //         //redirect to success page
+        //    }
+       // }
+//
+       // return $this->render('upload', ['model' => $model]);
+    //}
 }

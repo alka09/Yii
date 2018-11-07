@@ -11,7 +11,8 @@ $this->title = 'My Yii Application';
 
         <p class="lead">Список задач</p>
 
-        <p><a class="btn btn-lg btn-success" href="/?r=task">Список задач</a></p>
+        <?= \yii\helpers\Html::a('Список задач', ['task/'], ['class' => 'btn btn-lg btn-success'])?>
+ <!--       <p><a class="btn btn-lg btn-success" href="/?r=task">Список задач</a></p>-->
     </div>
 
     <div class="body-content">

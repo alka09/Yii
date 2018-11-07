@@ -2,15 +2,22 @@
 
 namespace app\controllers;
 
-use yii;
-use app\behaviors\MyBehavior;
+use app\models\ContactForm;
+use Yii;
 use app\models\tables\Tasks;
 use app\models\tables\Users;
-use app\models\Test;
+use app\models\User;
+use app\models\tables\TaskAttachments;
+use yii\base\Event;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
+use yii\debug\models\timeline\DataProvider;
+use yii\swiftmailer\Mailer;
 use yii\web\Controller;
-use app\components\EventsComponent;
+use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\validators;
+use yii\web\UploadedFile;
 
 class TaskController extends Controller
 {
@@ -18,7 +25,8 @@ class TaskController extends Controller
     {
 
         $month = date('n');
-        $id = 1;
+        //$id = 1;
+        $id = Yii::$app->user->id;
         $provider = new ActiveDataProvider([
             'query' => Tasks::getTaskCurrentMonth($month, $id)
         ]);
@@ -27,7 +35,7 @@ class TaskController extends Controller
 
         return $this->render('index', [
             'provider' => $provider,
-            'users' => $users
+            'user' => $users
         ]);
     }
 
@@ -50,9 +58,11 @@ class TaskController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
         $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
         return $this->render('update', [
             'model' => $model,

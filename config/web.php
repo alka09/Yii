@@ -69,9 +69,10 @@ $config = [
          //   'showScriptName' => false,
             'class' => codemix\localeurls\UrlManager::class,
             'languages' => ['ru', 'en'],
+            'enableDefaultLanguageUrlCode' => true,
             'rules' => [
                 'task' => 'task/index',
-                'single/<id>' => 'task/view',
+                'task/<id>' => 'task/view',
                 'task/update/<id>' => 'task/update',
                 'task/create/<id>' => 'task/create',
                 'task/delete/<id>' => 'task/delete',
@@ -80,9 +81,6 @@ $config = [
            //     '<controller:\w+>/<action:\w+>/'=>'<controller>\/<action>',
             ],
         ],
-
-
-
 
         'i18n' => [
             'translations' => [

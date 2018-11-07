@@ -99,9 +99,9 @@ class Tasks extends \yii\db\ActiveRecord
         return $this->hasMany(TaskAttachments::class, ['task_id' => 'id']);
     }
 
-    public static function getTaskCurrentMonth($month)
+    public static function getTaskCurrentMonth($month, $id)
     {
         return static::find()
-            ->where(["MONTH(date)" => $month]);
+            ->where(["MONTH(date)" => $month, '$user_id'=> $id]);
     }
 }

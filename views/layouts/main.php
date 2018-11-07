@@ -41,6 +41,7 @@ AppAsset::register($this);
             ['label' => Yii::t('common', 'Главная'), 'url' => ['/site/index']],
             ['label' => Yii::t('common', 'О проекте'), 'url' => ['/site/about']],
             ['label' => Yii::t('common', 'Контакты'), 'url' => ['/site/contact']],
+            ['label' => Yii::t('common', 'Регистрация'), 'url' => ['/site/signup']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

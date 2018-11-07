@@ -11,7 +11,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Task', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="taskAttachment-view">
+<div class="task-view">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= DetailView::widget([
@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             'created_at',
             'updated_at'
-//            'user_id',
         ],
     ]) ?>
 
