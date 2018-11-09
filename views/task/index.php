@@ -18,7 +18,7 @@ use yii\grid\GridView;
             'description:ntext',
             'date',
             'user_id' => [
-                'label' => 'Name',
+                'label' => 'User ID',
                 'value' => function ($data) {
                     return $data->user->login;
                 }

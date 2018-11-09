@@ -4,7 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\models\tables\Tasks;
 use app\models\tables\Users;
-use app\models\tables\TaskAttachments;
+use app\models\tables\ImageUpload;
 use app\models\User;
 use app\models\TasksSearch;
 use Yii;
@@ -147,43 +147,23 @@ class AdminTaskController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    public function actionSetImage($id) {
 
-    public function actionUpload()
-    {
-        $model = new TaskAttachments();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->save();
+        $model = new ImageUpload;
 
-            $file = UploadedFile::getInstances($model, 'images');
-            foreach ($file as $file) {
-                $path =Yii::getAlias('@app').'/web/'.'/uploadImg/'. $file->name;
-                $file->saveAs($path);
+        if (Yii::$app->request->isPost)
+        {
 
-            }
+            $task = $this->findModel($id);
+            //var_dump($task->name); die;
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            $file = UploadedFile::getInstance($model, 'image');
+
+            if ($task->saveImage($model->uploadFile($file, $task->image))){
+return $this->redirect(['view', 'id' => $task->id]);
+            };
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render('image', ['model' => $model]);
     }
-    //public function actionUpload($id)
-    //{
-//
-    //    $model = new TaskAttachments();
-//
-     //   if (isset($_POST['TaskAttachments'])){
-//
-       //     $model -> attributes = $_POST['TaskAttachments'];
-       //     $model -> image = UploadedFile::getInstance($model, 'image');
-//
-       //     if ($model -> save()){
-       //         $model -> image -> saveAs('path/to/localFile');
-       //         //redirect to success page
-        //    }
-       // }
-//
-       // return $this->render('upload', ['model' => $model]);
-    //}
+
 }

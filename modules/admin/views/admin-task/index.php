@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TasksSearch */
@@ -29,7 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'date',
             'description',
+            'image',
             'user_id',
+            [
+            'format' => 'html',
+                'label' => 'Image',
+                'value' => function($data){
+        return Html::img($data->getImage(), ['width' => 150]);
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

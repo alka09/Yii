@@ -7,21 +7,26 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\tables\Tasks */
 /* @var $form yii\widgets\ActiveForm */
 /**@var $users array */
-
 ?>
 
 <div class="tasks-form">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'upload-form', 'options' => ['enctype' => 'multipart/form-data']
+        'id' => 'task_create',
     ]); ?>
-
     <?= $form->field($model, 'image')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Submit', ['class' => 'btn btn-success']) ?>
     </div>
 
+    <? /*echo \yii\jui\DatePicker::widget([
+            'model' => $model,
+        'attribute' => 'date',
+        'dateFormat' => 'yyyy-MM-dd',
+        'language' => 'ru'
+
+    ]);*/ ?>
     <?php ActiveForm::end(); ?>
 
 </div>

@@ -26,16 +26,18 @@ class TaskController extends Controller
 
         $month = date('n');
         //$id = 1;
-        $id = Yii::$app->user->id;
+ $id = Yii::$app->user->id;
+
+        //var_dump($id);
+
         $provider = new ActiveDataProvider([
             'query' => Tasks::getTaskCurrentMonth($month, $id)
         ]);
-
         $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
 
-        return $this->render('index', [
+            return $this->render('index', [
             'provider' => $provider,
-            'user' => $users
+            'users' => $users
         ]);
     }
 

@@ -12,7 +12,6 @@ use Yii;
  * @property string $password
  * @property int $role_id
  * @property string $email
- * @property string $name
  * @property Roles $role
  * @property integer $created_at
  * @property integer $updated_at
@@ -39,7 +38,6 @@ class Users extends \yii\db\ActiveRecord
             [['password'], 'string', 'max' => 128],
             [['login'], 'unique'],
             [['email'], 'string', 'max' => 128],
-            [['name'], 'string', 'max' => 128],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
@@ -55,7 +53,6 @@ class Users extends \yii\db\ActiveRecord
             'password' => 'Password',
             'role_id' => 'Role ID',
             'email' => 'Email',
-            'name' =>'Name',
         ];
     }
 
