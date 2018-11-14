@@ -2,8 +2,8 @@
 
 namespace app\commands;
 
-use Yii;
 use yii\console\Controller;
+use yii\rbac\UserGroupRule;
 
 
 class RbacController extends Controller
@@ -11,35 +11,70 @@ class RbacController extends Controller
 
     public function actionIndex()
     {
+        $authManager = \Yii::$app->authManager;
 
-        $auth = Yii::$app->authManager;
+//create roles
+        $guest = $authManager->createRole('guest');
+        $user = $authManager->createRole('user');
+        $admin = $authManager->createRole('admin');
+        $productManager = $authManager->createRole('productManager');
 
-        $createTask = $auth->createPermission('createTask');
-        $createTask -> description = 'создание задачи';
-        $auth -> add($createTask);
+        //create permission
+        $login = $authManager->createPermission('login');
+        $logout = $authManager->createPermission('logout');
+        $signUp = $authManager->createPermission('sign-up');
+        $index = $authManager->createPermission('index');
+        $view = $authManager->createPermission('view');
+        $createTask = $authManager->createPermission('createTask');
+        $updateTask = $authManager->createPermission('updateTask');
+        $deleteTask = $authManager->createPermission('deleteTask');
 
-        $updateTask = $auth->createPermission('updateTask');
-        $updateTask -> description = 'редактирование задачи';
-        $auth -> add($updateTask);
+        //add permission in Yii::$app->authManager
+        $authManager->add($login);
+        $authManager->add($logout);
+        $authManager->add($signUp);
+        $authManager->add($index);
+        $authManager->add($view);
+        $authManager->add($createTask);
+        $authManager->add($updateTask);
+        $authManager->add($deleteTask);
 
-        $deleteTask = $auth->createPermission('deleteTask');
-        $deleteTask -> description = 'удаление задачи';
-        $auth -> add($deleteTask);
+        //add rule
+        $userGroupRule = new \app\rbac\UserGroupRule();
+        $authManager->add($userGroupRule);
 
-        $projectManager = $auth ->createRole('projectManager');
-        $auth -> add($projectManager);
-        $auth -> addChild($projectManager, $createTask);
+        //add rule "UserGroupRule" in roles
+        $guest->ruleName = $userGroupRule->name;
+        $user->ruleName = $userGroupRule->name;
+        $productManager->ruleName = $userGroupRule->name;
+        $admin->ruleName = $userGroupRule->name;
 
-        $admin = $auth->createRole('admin');
-        $auth -> add($admin);
-        $auth -> addChild($admin, $updateTask);
-        $auth -> addChild($admin, $deleteTask);
-        $auth -> addChild($admin, $projectManager);
+        //add role in Yii::$app->authManager
+        $authManager->add($guest);
+        $authManager->add($user);
+        $authManager->add($productManager);
+        $authManager->add($admin);
 
-        $auth -> assign($projectManager, 19);
-        $auth -> assign($admin, 18);
+        //распределяем роли
+        //guest
+        $authManager->addChild($guest, $login);
+        $authManager->addChild($guest, $logout);
+        $authManager->addChild($guest, $signUp);
+        $authManager->addChild($guest, $index);
+
+        //user
+        $authManager->addChild($user, $view);
+        $authManager->addChild($user, $guest);
+
+        //productManager
+        $authManager->addChild($productManager, $createTask);
+        $authManager->addChild($productManager, $user);
+
+        //admin
+        $authManager->addChild($admin, $updateTask);
+        $authManager->addChild($admin, $deleteTask);
+        $authManager->addChild($admin, $productManager);
+
 
     }
-
-
 }
