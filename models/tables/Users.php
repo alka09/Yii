@@ -2,7 +2,10 @@
 
 namespace app\models\tables;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+use yii\rbac\Role;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "users".
@@ -18,6 +21,19 @@ use Yii;
  */
 class Users extends \yii\db\ActiveRecord
 {
+
+    static public $users;
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

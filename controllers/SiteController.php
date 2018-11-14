@@ -4,14 +4,14 @@ namespace app\controllers;
 
 use app\models\ContactForm;
 use app\models\LoginForm;
-use app\models\tables\Users;
 use app\models\tables\Roles;
+use app\models\tables\Users;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
@@ -34,6 +34,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'actions' => ['logout'],
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['adminka'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
@@ -66,14 +71,23 @@ class SiteController extends Controller
     {
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if (!\Yii::$app->user->can($action->id)) {
+                throw new ForbiddenHttpException('Access denied');
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function actionIndex()
     {
-        return $this->render('index');
+            return $this->render('index');
+
     }
 
     /**

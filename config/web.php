@@ -37,7 +37,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => true
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -63,6 +63,10 @@ $config = [
             'class' => \app\components\EventsComponent::class
         ],
 
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'cache' => 'cache'
+        ],
 
         'urlManager' => [
         //    'enablePrettyUrl' => true,

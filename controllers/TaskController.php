@@ -2,22 +2,14 @@
 
 namespace app\controllers;
 
-use app\models\ContactForm;
-use Yii;
+use app\models\tables\TaskAttachments;
 use app\models\tables\Tasks;
 use app\models\tables\Users;
-use app\models\User;
-use app\models\tables\TaskAttachments;
-use yii\base\Event;
+use Yii;
 use yii\data\ActiveDataProvider;
-use yii\debug\models\timeline\DataProvider;
-use yii\swiftmailer\Mailer;
-use yii\web\Controller;
 use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\validators;
-use yii\web\UploadedFile;
 
 class TaskController extends Controller
 {
@@ -26,7 +18,7 @@ class TaskController extends Controller
 
         $month = date('n');
         //$id = 1;
- $id = Yii::$app->user->id;
+        $id = Yii::$app->user->id;
 
         //var_dump($id);
 
@@ -35,7 +27,7 @@ class TaskController extends Controller
         ]);
         $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
 
-            return $this->render('index', [
+        return $this->render('index', [
             'provider' => $provider,
             'users' => $users
         ]);
@@ -43,10 +35,8 @@ class TaskController extends Controller
 
     public function actionView($id)
     {
-
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = Tasks::findOne($id);
+        return $this->render('view', ['model' => $model]);
     }
 
     protected function findModel($id)
@@ -79,10 +69,10 @@ class TaskController extends Controller
     }
 
 
-   // public function actionTest()
-   // {
+    // public function actionTest()
+    // {
     //    Event::on(Tasks::class, Tasks::EVENT_AFTER_INSERT, function ($event) {
-     //       $task = new Tasks([
+    //       $task = new Tasks([
     //            'name' => 'Ознакомиться с проектом',
     //            'date' => date("Y-m-d"),
     //            'description' => 'Новый проект',
@@ -91,30 +81,27 @@ class TaskController extends Controller
     //        $task->save();
     //    });
 
-        //$user = new Users();
-        //$user->login = 'Vasechkim';
-        //$user->password = 'qwerty';
-        //$user->save();
+    //$user = new Users();
+    //$user->login = 'Vasechkim';
+    //$user->password = 'qwerty';
+    //$user->save();
 
     //}
 
-        public
-        function actionCache()
-        {
-            $number = rand();
-            $key = 'number';
-            $cache = \Yii::$app->cache;
+    public
+    function actionCache()
+    {
+        $number = rand();
+        $key = 'number';
+        $cache = \Yii::$app->cache;
 
-            if ($cache->exists($key)) {
-                $number = $cache->get($key);
-            }
-            \Yii::$app->cache->set("number", $number);
-
-            //var_dump($number);
-            exit;
-
+        if ($cache->exists($key)) {
+            $number = $cache->get($key);
         }
+        \Yii::$app->cache->set("number", $number);
 
+        //var_dump($number);
+        exit;
 
-
+    }
 }
