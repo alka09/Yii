@@ -15,6 +15,7 @@ class TasksSearch extends Tasks
     /**
      * {@inheritdoc}
      */
+
     public function rules()
     {
         return [
@@ -67,6 +68,10 @@ class TasksSearch extends Tasks
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+
+
+
         return $dataProvider;
     }
+
 }

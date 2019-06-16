@@ -9,9 +9,10 @@ $this->title = 'My Yii Application';
     <div class="jumbotron">
         <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Список задач</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <?= \yii\helpers\Html::a('Список задач', ['task/'], ['class' => 'btn btn-lg btn-success'])?>
+ <!--       <p><a class="btn btn-lg btn-success" href="/?r=task">Список задач</a></p>-->
     </div>
 
     <div class="body-content">

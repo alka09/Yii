@@ -5,12 +5,28 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'language' => 'ru',
+    'sourceLanguage' => 'ru',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'events'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
+
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+        'main' => [
+            'class' => 'app\modules\main\Module',
+        ],
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
+    ],
+
+
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -21,7 +37,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => true
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -43,14 +59,43 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        'events' => [
+            'class' => \app\components\EventsComponent::class
+        ],
+
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'cache' => 'cache'
+        ],
+
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+        //    'enablePrettyUrl' => true,
+         //   'showScriptName' => false,
+            'class' => codemix\localeurls\UrlManager::class,
+            'languages' => ['ru', 'en'],
+            'enableDefaultLanguageUrlCode' => true,
             'rules' => [
+                'task' => 'task/index',
+                'task/<id>' => 'task/view',
+                'task/update/<id>' => 'task/update',
+                'task/create/<id>' => 'task/create',
+                'task/delete/<id>' => 'task/delete',
+
+                '/' => 'site/index',
+           //     '<controller:\w+>/<action:\w+>/'=>'<controller>\/<action>',
             ],
         ],
-        */
+
+        'i18n' => [
+            'translations' => [
+                'common*' => [
+                    'class' => yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@app/messages',
+
+                ],
+            ],
+        ]
+
     ],
     'params' => $params,
 ];

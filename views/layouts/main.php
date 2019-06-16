@@ -38,9 +38,10 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => Yii::t('common', 'Главная'), 'url' => ['/site/index']],
+            ['label' => Yii::t('common', 'О проекте'), 'url' => ['/site/about']],
+            ['label' => Yii::t('common', 'Контакты'), 'url' => ['/site/contact']],
+            ['label' => Yii::t('common', 'Регистрация'), 'url' => ['/site/signup']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -69,7 +70,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; My Company <?= date('Y') ?> | <?= $this->render('language')?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
