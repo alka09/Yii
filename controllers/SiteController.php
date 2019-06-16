@@ -2,16 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\ContactForm;
-use app\models\LoginForm;
-use app\models\tables\Roles;
-use app\models\tables\Users;
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\filters\VerbFilter;
+use app\models\LoginForm;
+use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -23,22 +20,12 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'logout', 'signup'],
+                'only' => ['logout'],
                 'rules' => [
                     [
-                        'allow' => true,
-                        'actions' => ['login', 'signup'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
                         'actions' => ['logout'],
-                        'roles' => ['@'],
-                    ],
-                    [
                         'allow' => true,
-                        'actions' => ['adminka'],
-                        'roles' => ['admin'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -67,27 +54,19 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionCapcha()
-    {
+
+    public function actionCapcha(){
+
     }
 
-    public function beforeAction($action)
-    {
-        if (parent::beforeAction($action)) {
-            if (!\Yii::$app->user->can($action->id)) {
-                throw new ForbiddenHttpException('Access denied');
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
     public function actionIndex()
     {
-            return $this->render('index');
-
+        return $this->render('index');
     }
 
     /**
@@ -100,10 +79,12 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
@@ -118,6 +99,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+
         return $this->goHome();
     }
 
@@ -129,30 +111,14 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
+
             return $this->refresh();
         }
         return $this->render('contact', [
             'model' => $model,
-        ]);
-    }
-
-    public function actionSignup()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        $model = new Users();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            var_dump($model->getAddUser());
-            $model->addUser();
-        }
-        $role = ArrayHelper::map(Roles::find()->all(), 'id', 'name');
-        return $this->render('signup', [
-            'model' => $model,
-            'role' => $role
         ]);
     }
 

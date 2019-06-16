@@ -19,7 +19,7 @@ class UsersSearch extends Users
     {
         return [
             [['id', 'role_id'], 'integer'],
-            [['login', 'password', 'email', 'name'], 'safe'],
+            [['login', 'password'], 'safe'],
         ];
     }
 

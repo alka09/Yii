@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 /**@var $roles array*/
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\tables\Users */
 
@@ -15,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'roles' => $roles,
+        'roles' => $roles
     ]) ?>
 
 </div>

@@ -1,5 +1,6 @@
 <?php
-namespace app\modules\admin\controllers;
+
+namespace app\controllers;
 
 use Yii;
 use app\models\tables\Roles;
