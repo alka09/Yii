@@ -1,18 +1,16 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\controllers;
 
-use app\models\tables\Tasks;
 use app\models\tables\Users;
-use app\models\tables\ImageUpload;
 use app\models\User;
-use app\models\TasksSearch;
 use Yii;
-use yii\filters\VerbFilter;
+use app\models\tables\Tasks;
+use app\models\TasksSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
+use yii\filters\VerbFilter;
 
 /**
  * AdminTaskController implements the CRUD actions for Tasks model.
@@ -57,7 +55,6 @@ class AdminTaskController extends Controller
      */
     public function actionView($id)
     {
-        //Yii::$app->events;
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -73,29 +70,16 @@ class AdminTaskController extends Controller
         $model = new Tasks();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $user = Users::findOne($model->user_id);
-
-
-            $message = "Уважаемый {$user->login}! На вас поставлена новая задача {$model->name}. 
-            Дедлайн до {$model->date}";
-
-            Yii::$app->mailer
-                ->compose()
-                ->setTo($user->email)
-                ->setSubject('Новая задача')
-                ->setTextBody($message)
-                ->send();
-
-
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
 
+
+
         return $this->render('create', [
             'model' => $model,
-            'users' => $users,
+            'users' => $users
         ]);
     }
 
@@ -111,19 +95,21 @@ class AdminTaskController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $users = ArrayHelper::map(Users::find()->all(), 'id', 'login');
-
         return $this->render('update', [
             'model' => $model,
-            'users' => $users,
-
         ]);
     }
 
+    /**
+     * Deletes an existing Tasks model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -146,24 +132,4 @@ class AdminTaskController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-    public function actionSetImage($id) {
-
-        $model = new ImageUpload;
-
-        if (Yii::$app->request->isPost)
-        {
-
-            $task = $this->findModel($id);
-            //var_dump($task->name); die;
-
-            $file = UploadedFile::getInstance($model, 'image');
-
-            if ($task->saveImage($model->uploadFile($file, $task->image))){
-return $this->redirect(['view', 'id' => $task->id]);
-            };
-        }
-        return $this->render('image', ['model' => $model]);
-    }
-
 }

@@ -3,10 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\tables\Users
- * @var $roles array
- */
-
+/* @var $model app\models\tables\Users */
 
 $this->title = 'Update Users: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
@@ -19,7 +16,6 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
-        'roles' => $roles,
     ]) ?>
 
 </div>
